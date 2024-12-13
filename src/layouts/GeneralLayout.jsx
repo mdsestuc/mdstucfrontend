@@ -20,6 +20,7 @@ import { UserAdd } from '../pages/user/UserAdd';
 import { BeneficiarioAdd } from '../pages/beneficiarios/BeneficiarioAdd';
 import { EditBeneficiarioPage } from '../pages/beneficiarios/EditBeneficiarioPage';
 import { EliminarAtp } from '../pages/atencionpublico/EliminarAtp';
+import  Atpfechas  from '../pages/informes/atpfechas';
 
 
 
@@ -74,6 +75,7 @@ export function GeneralLayout() {
               <Route  path='/Beneficiarios/editar/:_id' element={<EditBeneficiarioPage />} />
               <Route  path='/atencionpublico' element={<AtencionPage />} />
               <Route  path='/eliminaratp' element={<EliminarAtp/>} />
+              <Route  path='/atpfecha' element={<Atpfechas/>} />
               <Route  path='/' element={<DashPage />} />
               <Route  path='/*' element={<Error404Page />} />
             </Routes>

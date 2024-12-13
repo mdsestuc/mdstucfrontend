@@ -7,18 +7,15 @@ import 'moment/locale/es';
 import moment from 'moment/min/moment-with-locales';
 moment.locale('es');
 
-export const Deposit = () => {
-    const [beneCant, setBeneCant] = React.useState(0);
+const Atpinfo = () => {
+    const [atpCant, setAtpCant] = React.useState(0);
     const navigate = useNavigate();
 
-    const  preventDefault = (event) => {
-        event.preventDefault();
-    }
-    const leerBeneficiarios = async () => {
+    const leerAtp = async () => {
         try {
-            const {  data  } = await dashAxios.get('/dashboard/main');
-            console.log(data, "cant benef");
-            setBeneCant(data.benefcant);
+            const {  data  } = await dashAxios.get('/dashboard/atp/main');
+            console.log(data, "cant atp");
+            setAtpCant(data.atpcant);
         } catch (error) {      
             //console.log(error, "error")      
             const msg = error.response.data.msg;
@@ -38,7 +35,7 @@ export const Deposit = () => {
         return localLocale.format('LL');
     }
 
-    React.useEffect(() => {leerBeneficiarios() },[])    
+    React.useEffect(() => {leerAtp() },[])    
 
   return (
     <>
@@ -47,14 +44,14 @@ export const Deposit = () => {
             variant="h2" 
             //color= 'text.secondary'
             >
-            {beneCant}
+            {atpCant }
         </Typography>
         <Typography 
             //color="text.secondary" 
             //color=  "text.secondary"
             sx={{ pt:4 }}
             >
-            Total de Beneficiarios
+            Total de Atp
         </Typography>
         <Typography 
             //color="text.secondary" 
@@ -67,11 +64,13 @@ export const Deposit = () => {
             <Link 
             color="primary" 
              //color="inherit"
-            href="#" onClick={() => navigate(`/Beneficiarios`)}>
-            Ver todos
+            href="#" onClick={() => navigate(`/atencionpublico`)}>
+            Ingresar nuevo Atp
             </Link>
         </div>
     </>
 
   )
 }
+
+export default Atpinfo

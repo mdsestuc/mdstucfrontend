@@ -59,6 +59,8 @@ export const EliminarAtp = () => {
   const { state, getBeneficiarios, getBeneficiario, initBeneficiario } = React.useContext(BeneficiarioContext)
   const {beneficiario} = state;
   const [listaatp, setListaatp] = useState([]);
+  //const [visitas, setVisitas] = React.useState([]);
+  //const [visitas1, setVisitas1] = React.useState([]);
 
   const leerAtp = async () => {
     // console.log(Object.keys(state.beneficiario).length, 'length de beneficiario')
@@ -267,6 +269,8 @@ export const EliminarAtp = () => {
               //setListaatp={setListaatp}
               //listaatp={listaatp} 
               deleteAtp={deleteAtp}
+              //visitas={visitas}
+              //setVisitas={setVisitas}
               />
 /*         <Accordion expanded={expanded === index} onChange={handleChange(index)}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">

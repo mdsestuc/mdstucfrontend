@@ -39,12 +39,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Atencion Publico" />
     </ListItemButton>
-    <ListItemButton LinkComponent={Link} to={'/estadisticas'}>
+{/*     <ListItemButton LinkComponent={Link} to={'/estadisticas'}>
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
-      <ListItemText primary="Estadisticas" />
-    </ListItemButton>
+      <ListItemText primary="Listados" />
+    </ListItemButton> */}
   </React.Fragment>
 );
 

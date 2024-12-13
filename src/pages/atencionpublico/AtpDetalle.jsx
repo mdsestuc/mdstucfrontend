@@ -97,6 +97,7 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
     const [marcha, setMarcha] = React.useState(atp.marcha);
     const [prioridad, setPrioridad] = React.useState(atp.prioridad);
     const [actividadesrubro, setActividadesrubro] = React.useState(()=> atp.actividades.length !== 0 ? actividades.filter((a) => (a.idrubro === atp.actividades[0].idrubro )) : actividades);
+    const [visitas, setVisitas] = React.useState(atp.visitas);
     
     const navigate = useNavigate();
 
@@ -132,6 +133,8 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
       //console.log(actirubro, "actirubro")
     }
 
+    let atpvisitasort = atp.visitas.sort();
+
     const { formState, onInputChange, addProvisetForm, onResetForm} = useForm({
       id: atp._id,
       fechainicio: moment(atp.fechainicio).format("YYYY-MM-DD"),
@@ -139,7 +142,9 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
       solicita: atp.solicita,
       observaciones: atp.observaciones,
       experticie: atp.idexperticie,
-      fechaatp: moment(atp.fechaatp).format("YYYY-MM-DD"),
+      fechaatp: moment.utc(atp.fechaatp).format("YYYY-MM-DD"),
+      //fechaatp: moment.utc(atpvisitasort).format("YYYY-MM-DD"),
+      addvisita: moment.utc().format("YYYY-MM-DD")
     });
     const modificarAtp = async () => {
       //validar
@@ -162,7 +167,7 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
                 prioridad: prioridad,
                 experticie: formState.experticie,
                 fechaatp: formState.fechaatp,
-                visitas: fechavisitas,
+                visitas: visitas,
             }
             const { data } = await dashAxios.put('/atpModificar/', modiAtp);
   
@@ -187,6 +192,24 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
       deleteAtp(id);
     }
   }
+  const AddVisita = () => {
+    //let resul = visitas;
+    //console.log(visitas, "add visitas")
+    //console.log(resul, "add resul")
+    //resul.push(formState.addvisita);
+    //console.log(resul, "add visitas resul")
+    let resulta = visitas.filter((visi) => {  console.log( moment.utc(visi).format("YYYY-MM-DD"), formState.addvisita, "comparcion"); return (moment.utc(visi).format("YYYY-MM-DD") === formState.addvisita)});
+    console.log(resulta.length, "resulta")
+    if (resulta.length > 0)
+    {
+      window.confirm('Ya Existe la fecha que quiere ingresar!');
+      return;
+    }
+    
+    setVisitas([...visitas, formState.addvisita]);
+    console.log(visitas, "set visitas")
+  }
+
   //let fechahoy = moment().format("YYYY-MM-DD");
     
   //const [fechavisitas, setFechavisitas] = React.useState([fechahoy, moment(fechahoy).subtract(1, 'd').format("YYYY-MM-DD"), moment(fechahoy).subtract(2, 'd').format("YYYY-MM-DD")]);
@@ -467,20 +490,38 @@ export const AtpDetalle = ({index, atp, origen, actividades, rubros, experticie,
             onChange={ (event ) => onInputChange(event) }
           />
         </Grid>
-{/*         <Grid item xs={12} md={6}>
-        <List subheader={ 
-            <ListSubheader component="div" id="nested-list-subheader"> 
-              Fecha de Consulta 
-            </ListSubheader> 
-          } >
-        {        
-        fechavisitas.map((todo, index) =>
-          <ListItemButton key = {index} >{ moment(todo).format("DD/MM/YYYY")} </ListItemButton>)
-        }
-        </List>
+        <Grid item xs={12} md={3}>
+          <VisitasFechas 
+              visitas={visitas.sort()} 
+              setVisitas={setVisitas}
+              formState = {formState} 
+              onInputChange = {onInputChange}  />
         </Grid>
- */}    <Grid item xs={12} md={2.7}>
-          <VisitasFechas atp={atp} />
+        <Grid item xs={12} md={2}>
+          <TextField 
+          // error={state.errorMessage.length > 0 ?  true : false}
+          margin="normal"
+          //required
+          fullWidth
+          type='Date'
+          id="addvisita"
+          label="Agregar Fecha de visita"
+          name="addvisita"
+          autoComplete="Agregar Fecha de visita"
+          value={formState?.addvisita}
+          onChange={ (event ) => onInputChange(event) }
+          />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <Button 
+            variant="outlined" 
+            size="medium"
+            sx={{ my: 3 }}
+            //margin={25}
+            //mt={50}
+            //color='info' 
+            onClick={() => AddVisita()}
+          >Add Visita</Button>
         </Grid>
         <Grid item xs={12} md={2}>
           <Button 

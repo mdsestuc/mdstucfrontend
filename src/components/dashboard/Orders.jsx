@@ -5,6 +5,13 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { dashAxios } from '../../config/DashRcAxios';
+import { useNavigate } from 'react-router-dom';
+import 'moment/locale/es';
+import moment from 'moment/min/moment-with-locales';
+moment.locale('es');
+import { BeneficiarioContext } from '../../contexts/BeneficiarioContext';
+
 
 
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -52,33 +59,74 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
+  const { state } = React.useContext(BeneficiarioContext);
+  const [listaBene, SetListaBene] = React.useState([]);
+  const navigate = useNavigate();
+  //moment.locale('es');
+/*   moment.locale('es', {
+    months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
+    monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
+    weekdays: 'Domingo_Lunes_Martes_Miercoles_Jueves_Viernes_Sabado'.split('_'),
+    weekdaysShort: 'Dom._Lun._Mar._Mier._Jue._Vier._Sab.'.split('_'),
+    weekdaysMin: 'Do_Lu_Ma_Mi_Ju_Vi_Sa'.split('_')
+  }
+  ); */
+  
+  const benelist = async () => {
+    try {
+      const {  data  } = await dashAxios.get('/dashboard/beneficiarios/list');
+      console.log(data, "list 5 benef");
+      SetListaBene(data.benef5list);
+  } catch (error) {      
+      console.log(error, "error")      
+      const msg = error.response.data.msg;
+      alert(
+      "Respuesta: " + msg
+      );
+  }
+  
+
+  }
+
+  React.useEffect(
+    ()=>{
+      benelist();
+    }, []
+  );
   return (
     <React.Fragment>
+      {listaBene.length > 0
+      ?
+      <>
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell>Fecha</TableCell>
+            <TableCell>Beneficiario</TableCell>
+            <TableCell>Documento</TableCell>
+            <TableCell>Provincia</TableCell>
+            <TableCell align="right">Localidad</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {listaBene.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell>{moment.utc(row.created_at).format('LL')}</TableCell>
+              <TableCell>{row.apellido + ', ' + row.nombre}</TableCell>
+              <TableCell>{row.documento.toLocaleString()}</TableCell>
+              <TableCell>{row.provincia}</TableCell>
+              <TableCell align="right">{`${row.localidad}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+      <Link color="primary" href="#" onClick={() => navigate(`/Beneficiarios`)} sx={{ mt: 3 }}>
+        Ver mas Beneficiarios
       </Link>
+      </>
+      :
+      null
+      }
     </React.Fragment>
   );
 }

@@ -9,17 +9,19 @@ import { Grid, TextField, Box, Button, ListSubheader, Typography, IconButton, Pa
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import moment from 'moment';
 
-export const VisitasFechas = ({atp}) => {
-    const [visitas, setVisitas] = React.useState(atp.visitas);
+export const VisitasFechas = ({visitas, setVisitas}) => {
+    //const [visitas, setVisitas] = React.useState(atp.visitas);
+    //setVisitas(atp.visitas);
     const onClickDeletevisita = (i) => {
         if (window.confirm('Esta Seguro de Eliminar esta Visita'))
         {
           console.log(visitas, 'visitas')
           //visitas.splice(i,1);
-          let resulta = visitas
+          //let resulta = visitas.map((visi, index) => index !== i ? visi : "")
+          let resulta = visitas.filter((visi, index) => index !== i )
     
           console.log(resulta, 'resulta visitas')
-          resulta.splice(i,1)
+          //resulta.splice(i,1)
           console.log(i, 'index')
           console.log(resulta, 'resulta despues del splice')
           setVisitas(resulta);
@@ -29,6 +31,7 @@ export const VisitasFechas = ({atp}) => {
       }
     
   return (
+    <>
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 200 }} aria-label="simple table">
       <TableHead>
@@ -44,7 +47,7 @@ export const VisitasFechas = ({atp}) => {
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
         <TableCell component="th" scope="row">
-          {moment(row).format("DD-MM-YYYY")}
+          {moment.utc(row).format("DD-MM-YYYY")}
         </TableCell>
         <TableCell align="right">
         <IconButton
@@ -59,10 +62,11 @@ export const VisitasFechas = ({atp}) => {
         </IconButton>
         </TableCell>
       </TableRow>
-    ))}
-  </TableBody>
-</Table>
-</TableContainer>
+      ))}
+      </TableBody>
+    </Table>
+    </TableContainer>
+    </>
 
   )
 }

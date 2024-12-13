@@ -5,12 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
 import { AppBar } from "./AppBar";
 import { Button } from "@mui/material";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-
+import logomds from './logomds1.jpg'
 
 
 
@@ -51,6 +50,13 @@ export const NavBar = ({ toggleDrawer, open }) => {
         >
           Dashboard
         </Typography>
+        <img
+        srcSet={logomds}
+        src={logomds}
+        //width={150} 
+        //height={80}
+        loading="lazy"
+      />
         <Typography
           component="h1"
           variant="h6"

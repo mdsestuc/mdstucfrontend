@@ -378,7 +378,7 @@ export const BeneficiarioProvider = ({ children }) => {
         const limit = 25;
         //const { data } = await dashAxios.get(`users?limit=${limit}&page=${page}`);
         const { data } = await dashAxios.get(`listarbeneficiarios?limit=${limit}&page=${page}`);
-        console.log(data)
+        console.log(data, 'Beneficiarios')
         if(!data.bene.docs){
             return dispatch({
                 type: types.beneficiario.messages,
