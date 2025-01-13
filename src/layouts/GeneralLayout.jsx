@@ -20,7 +20,7 @@ import { UserAdd } from '../pages/user/UserAdd';
 import { BeneficiarioAdd } from '../pages/beneficiarios/BeneficiarioAdd';
 import { EditBeneficiarioPage } from '../pages/beneficiarios/EditBeneficiarioPage';
 import { EliminarAtp } from '../pages/atencionpublico/EliminarAtp';
-import { Atpfechas }  from '../pages/informes/atpfechas';
+import { Atpfechas }  from '../pages/informes/Atpfechas';
 
 
 

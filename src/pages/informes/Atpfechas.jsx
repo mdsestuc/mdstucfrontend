@@ -29,7 +29,7 @@ const rows = [
 ];
 
 
-const Atpfechas = () => {
+export const Atpfechas = () => {
   const { formState, onInputChange, onResetForm} = useForm({
     fechainicial: moment.utc().format("YYYY-MM-DD"),
     fechafinal: moment.utc().format("YYYY-MM-DD"),
@@ -433,4 +433,4 @@ return (
   )
 }
 
-export default Atpfechas
+//export default Atpfechas
