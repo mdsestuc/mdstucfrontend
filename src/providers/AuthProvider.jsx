@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) =>  {
             });
         } catch (error) {
             const { data }  = error.response
-            
+            console.log(data, 'data user')
             dispatch({
                 type: types.auth.onLogout,
                 payload: {
