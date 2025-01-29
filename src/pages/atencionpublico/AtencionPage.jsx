@@ -257,6 +257,16 @@ React.useEffect(
     <div>
       <Box padding={1}>
       <Grid container item xs={12} md={12} display={'flex'}   spacing={1}>
+        <Grid  item xs={12} md={12} sx={{ 
+                        marginTop: 1,
+                    }}> 
+          <Typography 
+            variant='h5' 
+            fontFamily={'fantasy'}
+          >
+            Atencion al Publico
+          </Typography>
+        </Grid>
 
         <SearchBeneficiario />
         <Grid item xs={12} md={3}></Grid>     

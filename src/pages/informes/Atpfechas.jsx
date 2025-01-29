@@ -45,11 +45,12 @@ export const Atpfechas = () => {
       const page = 1;
 
       const { data } = await dashAxios.get(`/listatpfecha?limit=${limit}&page=${page}`, {headers: { fechainicial: formState.fechainicial, fechafinal: formState.fechafinal}});
-      console.log(data, "req atp fecha")
+      console.log(data.atp, "req atp fecha")
       setAtpFecha(data.atp);
       alert('Se pudo leer el ATP del Beneficiario con exito!');
 
       if (data.atp) {
+        console.log("llega al if atpuni")
         let atpuni = data.atp.map( (cada) => {
           return({Beneficiario: cada.idbeneficiario.apellido + ", " + cada.idbeneficiario.nombre,
               Documento: cada.idbeneficiario.documento,
@@ -281,6 +282,16 @@ atpexcel.length > 0 ?
 
 return (
     <Grid container spacing={1}>
+            <Grid  item xs={12} md={12} sx={{ 
+                        marginTop: 1,
+                    }}> 
+              <Typography 
+                variant='h5' 
+                fontFamily={'fantasy'}
+              >
+                Consulta Atp por Fechas
+              </Typography>
+            </Grid>
             <Grid item xs={12} md={2}>
                 <TextField 
                 // error={state.errorMessage.length > 0 ?  true : false}
