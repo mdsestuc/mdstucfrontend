@@ -1,6 +1,9 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polygon, useMapEvents } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
+import { renderToStaticMarkup } from "react-dom/server";
+import { divIcon } from "leaflet";
+import Fab from '@mui/material/Fab';
 
 
 
@@ -10,6 +13,15 @@ export const MapView = ({ latitud, longitud, coordenadas, SetCoordenadas, addLat
     const position = [latitud, longitud]
     const posi = coordenadas.map( (uno) => { return [uno.lat, uno.lon] })
     console.log(posi, "posi")
+
+    const iconMarkup = renderToStaticMarkup(
+      <Fab size="small" variant="extended">
+        Casa
+      </Fab>
+    );
+    const customMarkerIcon = divIcon({
+      html: iconMarkup
+    });
 
     function LocationMarker() {
       const map = useMapEvents({
@@ -38,7 +50,7 @@ export const MapView = ({ latitud, longitud, coordenadas, SetCoordenadas, addLat
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
     {coordenadas.map( (cadauno, index) => 
-    <Marker key={index} position= { [ cadauno.lat, cadauno.lon ] } >
+    <Marker key={index} position= { [ cadauno.lat, cadauno.lon ] } icon={customMarkerIcon}>
       <Popup>
         A pretty CSS3 popup. <br /> Easily customizable.
       </Popup>
